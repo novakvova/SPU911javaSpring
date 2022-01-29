@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.dto.Animal;
 import app.entities.AnimalEntity;
+import app.mapper.AnimalMapper;
 import app.repositories.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,13 @@ import java.util.List;
 @RestController
 public class HomeController {
     private final AnimalRepository animalRepository;
+    private final AnimalMapper animalMapper;
 
     @Autowired
-    public HomeController(AnimalRepository animalRepository) {
+    public HomeController(AnimalRepository animalRepository,
+                          AnimalMapper animalMapper) {
         this.animalRepository = animalRepository;
+        this.animalMapper = animalMapper;
     }
 
     @GetMapping("/")
@@ -25,9 +29,10 @@ public class HomeController {
         return animalRepository.findAll();
     }
     @PostMapping("/create")
-    public String add(AnimalEntity animal)
+    public String add(Animal animal)
     {
-        animalRepository.save(animal);
+        AnimalEntity animalEntity =  animalMapper.AnimalToAnimalEntity(animal);
+        animalRepository.save(animalEntity);
         return "Додано";
     }
 }
