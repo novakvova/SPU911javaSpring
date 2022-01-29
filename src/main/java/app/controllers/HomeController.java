@@ -1,7 +1,11 @@
 package app.controllers;
 
 import app.dto.Animal;
+import app.entities.AnimalEntity;
+import app.repositories.AnimalRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -9,23 +13,21 @@ import java.util.List;
 
 @RestController
 public class HomeController {
-    private static List<Animal> list = new ArrayList<>();
-    @GetMapping("/")
-    public List<Animal> index() {
-//        Animal belka = new Animal();
-//        belka.setId(1);
-//        belka.setName("Білка Іванка");
-//        list.add(belka);
-//        Animal bober = new Animal();
-//        bober.setId(2);
-//        bober.setName("Бобер Славік");
-//        list.add(bober);
-        return list;
+    private final AnimalRepository animalRepository;
+
+    @Autowired
+    public HomeController(AnimalRepository animalRepository) {
+        this.animalRepository = animalRepository;
     }
-    @GetMapping("/create")
-    public String add(Animal animal)
+
+    @GetMapping("/")
+    public List<AnimalEntity> index() {
+        return animalRepository.findAll();
+    }
+    @PostMapping("/create")
+    public String add(AnimalEntity animal)
     {
-        list.add(animal);
+        animalRepository.save(animal);
         return "Додано";
     }
 }
