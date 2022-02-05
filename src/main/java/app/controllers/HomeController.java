@@ -28,6 +28,7 @@ public class HomeController {
     public List<AnimalEntity> index() {
         return animalRepository.findAll();
     }
+
     @PostMapping("/create")
     public String add(Animal animal)
     {
