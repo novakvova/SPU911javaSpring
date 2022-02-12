@@ -8,7 +8,9 @@ const HomePage : React.FC = () => {
     const prevRef = React.useRef<HTMLImageElement>(null);
     const [cropperObj, setCropperObj] = React.useState<Cropper>();
 
-    const [visible, setVisible] = React.useState(false);
+    const [visible, setVisible] = React.useState<boolean>(false);
+    const [imageView, setImageView] = React.useState<string>("https://www.securityindustry.org/wp-content/uploads/sites/3/2018/05/noimage.png");
+
     const handleShow = async () => {
         await setVisible(true);
         let cropper = cropperObj;
@@ -30,11 +32,18 @@ const HomePage : React.FC = () => {
     }
 
     return (
-        <>
+      <>
         <h1>Головна сторінка</h1>
-        <Button type="primary" onClick={handleShow}>
+        {/* <Button type="primary" onClick={handleShow}>
           Завантажити фото
-        </Button>
+        </Button> */}
+        <div>
+          <label htmlFor="uploadfile">
+            <img src={imageView} alt="фото" width="250" />
+          </label>
+          <input type="file" id="uploadfile" style={{display: "none"}} />
+        </div>
+
         <Modal
           title="Вибір фото"
           centered
@@ -44,28 +53,29 @@ const HomePage : React.FC = () => {
           width={1000}
           maskClosable={false}
         >
-          <Row gutter={[8,0]}>
+          <Row gutter={[8, 0]}>
             <Col md={18} xs={24}>
-                <div>
-                    <img
-                        ref={imgRef} 
-                        src="https://vovalohika.tk/images/1200_431btv0l.ykj.jpeg" 
-                        width="100%"/>
-                </div>
+              <div>
+                <img
+                  ref={imgRef}
+                  src="https://vovalohika.tk/images/1200_431btv0l.ykj.jpeg"
+                  width="100%"
+                />
+              </div>
             </Col>
             <Col md={6} xs={24}>
-                <div
-                    ref = {prevRef}
-                    style={{
-                        height: "100px",
-                        border: "1px solid silver",
-                        overflow: "hidden"
-                    }}>
-                </div>
+              <div
+                ref={prevRef}
+                style={{
+                  height: "100px",
+                  border: "1px solid silver",
+                  overflow: "hidden",
+                }}
+              ></div>
             </Col>
           </Row>
         </Modal>
-        </>
+      </>
     );
 }
 
