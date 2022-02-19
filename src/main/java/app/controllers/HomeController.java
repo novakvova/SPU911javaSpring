@@ -34,6 +34,7 @@ public class HomeController {
 
     @GetMapping("/")
     public List<AnimalEntity> index() {
+        List<AnimalEntity> list = animalRepository.findByName("Єнот");
         return animalRepository.findAll();
     }
 
