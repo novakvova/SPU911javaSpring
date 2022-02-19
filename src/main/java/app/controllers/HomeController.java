@@ -36,4 +36,6 @@ public class HomeController {
         animalRepository.save(animalEntity);
         return "Додано";
     }
+
+
 }
